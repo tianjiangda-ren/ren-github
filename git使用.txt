@@ -1,0 +1,104 @@
+安装github
+注册github，登陆
+本地：
+新建文件夹，右键 git bash here
+git init //初始化Git仓储/(仓库)目录下多了一个 .git 隐藏目录
+
+#配置
+-在git中设置当前使用的用户是谁
+#每一次备份都会把当前备份者的信息存储起来
+命令：
+*配置用户名：git config --global user.name “小明”
+*配置邮箱：git config --global user.email "xiaoming@sina.cc"
+
+#生成秘钥
+ssh-keygen -t rsa -C "xiaoming@sina.cc"
+cat ~/.ssh/id_rsa.pub 查看生成的秘钥
+登陆github网页，用户名下拉按钮 settings（设置）>> SSH and GPG keys （SSH和GPG秘钥）>> new SSH key（新的SSH秘钥）
+名字自定义，秘钥从上一步复制
+
+新增仓库
+网页新建仓库
+点击clone or doenload(克隆或下载)  可以选择Use https(使用https)/Use SSH(使用SSH)
+复制链接
+git命令
+git clone git@github.com:用户名/仓库名.git
+git remote add origin https://github.com/guyibang/TEST2.git
+git config http.psotBuffer 524288000 修改上传文件大小限制
+
+#把代码存储到 .git 仓库中
+git add 你要单独提交的文件的路径
+git add ./ 把所有的修改的文件添加到git（注意当前路径位置）
+git commit -m “本次上传的说明”
+-m 后的说明不可省略，如省略报错，按i 进入编辑状态 在Esc后 :q! 强制退出
+
+#可以一次性把我们修改的代码放到房间里（版本库）
+-‘git commit --all -m ‘一些说明’’
++ --all 表示是把所有修改的文件提交到版本库
+
+git push --set-upstream origin master 修改默认主机和库。以后上传下载就可以直接用 
+git push 
+
+git pull 把远端与本地同步一下 
+git push --set-upstream wenjianming xinwenjianming 更改本地和远端的文件名
+git push github --all 把本地的文件上传到远程仓库
+
+#查看当前的状态
+-可以用来查看当前代码有没有被放到仓储中去
+-命令： ‘git status
+
+平时使用
+#查看当前的git仓库状态
+git status
+#把更新的代码添加到暂存区。
+git add *
+#将暂存区的更新提交到仓库区。
+git commit -m "更新说明" （更新说明，是本次推送代码的标识，写什么都可以，只要自己看得懂）
+#先git pull,拉取远程仓库所有分支更新并合并到本地。
+git pull
+#将本地分支的更新全部推送到远程仓库
+git push origin master
+#再次使用git status查看当前的git仓库状态，已经没有改动，证明更新成功
+
+#git中 的忽略文件
+
+.gitignore,在这个文件中可以设置要被忽略的文件或者目录，
+被忽略的文件不会被提交仓储里去
+在 .gitignore 中可以书写要被忽略的文件的路径，以 / 开头，
+一行写一个路径，这些路径所对应的文件都会被忽略，不会被提交到仓储中
++写法
+* ‘/.idea’ 会忽略 .idea 文件
+* ‘/js’ 会忽略 js 目录里的所有文件
+* ‘/js/*.js’会忽略js目录下所有js 文件
+# 查看日志
+-‘git log’ 查看历史提交的日志
+-‘git log --oneline’ 可以看到简介版的日志
+
+# 回退到指定的版本
+-‘git reset --hard Head~0’
+
+表示回退到上一次代码提交的状态
+-‘git reset --hard Head~1’
+表示回退到上上次代码提交时的状态
+‘git reset --hard【版本号】’
++可以通过版本号精确的回退到某一次提交时的状态
+-‘git reflog’
++可以看到每一次切换版本的记录：可以看到所有提交的版本号
+#分支
+-默认是有一个主分支 master
+
+###创建分支
+-‘git branch dev’
++创建了一个 dev 分支
++在刚创建时 dev 分支里的东西和master 分支里的东西是一样的
+
+###切换分支
+-‘git checkout dev’
++ 切换到指定的分支，这里的切换到名为 dev 的分支
++ ‘git branch’ 可以查看当前有哪些分支
+
+###合并分支
+-‘git merge dev’
++合并分支内容，把当前分支与指定的分支（dev），进行合并
++当前分支指的是‘git branch’命令输出的前面有 * 号的分支
+-合并时如果有冲突，需要手动去处理，处理后还需要在提交一次
